@@ -1,7 +1,5 @@
 # Modernize your app - Demo details
 
-**Git:** https://github.com/shweaver-MSFT/KnowzyInternalApps.git
-
 **Branch:** master
 
 **Project:** Knowzy_Engineering_Win32App
