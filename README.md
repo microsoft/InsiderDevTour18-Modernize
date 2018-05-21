@@ -1,14 +1,146 @@
+# Modernize your app - Demo details
 
-# Contributing
+**Git:** https://github.com/shweaver-MSFT/KnowzyInternalApps.git
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+**Branch:** master
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+**Project:** Knowzy_Engineering_Win32App
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## Setup:
+
+### Pre-requisites
+
+* Windows 10 April 2018 Update [10.0.17134]
+    * Include Windows subsystem for Linux
+
+* Visual Studio Community 2017 [15.7.1]
+    * Universal Windows Platform development 
+        * Include Windows 10 SDK 10.0.17134
+        * C++ Universal Windows Platform tools
+    * .NET desktop development
+        * Include .NET Framework 4.6.2 development tools 
+    * Desktop development with C++
+    * .NET Core cross-platform development
+
+### Packaging your desktop app - Setup
+
+For test purposes ensure you have **Developer mode** turned on in **System settings - Use developer features**.
+
+For the packaging demo, the package creation UI requests a location to host the package, index.html and .appinstaller files. Create a local fileshare to host the files for the demo.
+
+The package generation is slow to demo live, so follow the demo steps once before hand to generate the app package ahead of time. Place the generated files in the share folder manually and keep the folder open and handy for later.
+
+### Modern UX - example: WebView - Setup
+
+Ensure you can browse to **aboutknowzy.azurewebsites.net** ahead of time - you may need to set up a local webserver with the content if there are network issues, although the page is lightweight.
+
+### Modern command-line - Setup
+
+Ensure the "Windows subsystem for Linux" feature has been added in the Windows **Turn Windows features on or off** Control Panel - you will need to reboot afterwards.
+
+Ensure you have a Linux distribution installed. Go to the **Windows Store app**, search for **"Ubuntu"** and install **"Ubuntu 18.04"**. Once it has installed, run it once to initialize. You can pin the Ubuntu app onto your taskbar for fast access. Leave the Store search page open and handy for later.
+
+In **Visual Studio - Extensions and Updates** search for **"Console App (Universal) Project Templates"** in the **Online** marketplace and install. This will enable you to build and deploy the UWP command line app. **NOTE:** At the time of writing this was only available for C++ apps (hence the C++ pre-requisites), but a C# version is expected imminently.
+
+In the **Microsoft.Knowzy.WPF** solution, right-click the **KnowzyCmd** project and hit **Deploy**.
+
+Open a **Developer Command Prompt** to **..\KnowzyInternalApps** and keep this open for later.
+
+### Modern features - example: Windows Hello - Setup
+
+You will need a TPM chip that is pre-configured in order to demonstrate **Windows Hello**. You will need a web-cam if you want to show **Face sign-in**, or a **PIN** configured for PIN sign-in. Ensure you have this setup in **Sign-in options** in **System settings**.
+
+## Demo Phases:
+
+1. Packaging your desktop app
+2. Modern UX - example: WebView
+3. Modern features - example Windows Hello
+4. Modern command-line
+
+## Packaging your desktop app
+
+### Add the Packaging Project
+
+1. Right-click Solution -> Add -> New Project
+2. Add a Windows Application Packaging Project project to your solution.
+
+    You won't have to add any code to it. It's just there to generate a package for you.
+
+    * Found under: `Visual C#` -&gt; `Windows Universal`
+    * Name: `Microsoft.Knowzy.PackagingProject`
+    * Location: `<path>\KnowzyInternalApps\src\Knowzy_Engineering_Win32App\src\`
+
+    #### Note: This project appears only in Visual Studio 2017 version 15.5 or higher.
+
+3. Set the Target and Min Version of this project to the latest version (2018 April Update). Typically, we would set the **Minimum Version** to `Windows 10 Anniversary Update`. However, for this demo, we want to show the side-by-side app installer updates which only works on the latest version currently.
+
+### Target the desktop application
+
+4. In the packaging project, right-click the `Applications` folder, and then choose `Add Reference`.
+5. Choose your desktop application project (`Microsoft.Knowzy.WPF`), and then choose the `OK` button.
+6. Right-click the `Microsoft.Knowzy.PackagingProject` project and click `Set as StartUp Project` 
+
+### Build app packages
+
+7. Right-click the `Microsoft.Knowzy.PackagingProject` project -&gt; `Store` -&gt; `Create App Packages...`
+8. Select the second radio button: `I want to create packages for sideloading`
+9. Check the checkbox: `Enable automatic updates`
+10. Click `Next`
+11. Click `Next` again
+12. Input the network share location to host the files. The field is required even though the generated packages are not actually deposited there, and must be moved manually. Input the share folder path to enable the `Create` button. 
+14. Instead of actually generating more packages, close the window and Alt-Tab over to the folder with the pre-generated app package files.
+14. Double-click the index.html to open (don't need to actually install).
+
+## Modern UX - example: WebView
+
+1. Open `Views/AboutView.xaml` from the `Microsoft.Knowzy.WPF` project.
+2. Add controls namespace to the top of the page
+    ```
+    xmlns:controls="clr-namespace:Microsoft.Toolkit.Win32.UI.Controls.WPF;assembly=Microsoft.Toolkit.Win32.UI.Controls"
+    ```
+3. Replace the existing WebBrowser control with a new Win32 WebView control.
+    ```
+    <!--<WebBrowser Grid.Row="1" Source="http://aboutknowzy.azurewebsites.net" />-->
+    <controls:WebView Grid.Row="1" Source="http://aboutknowzy.azurewebsites.net" />
+    ```
+4. Run the app, and click `Help` in the menu to see the updated Edge WebView.
+
+## Modern features - example: Windows Hello
+
+1. Go to the `Microsoft.Knowzy.WPF` project and update the following files:
+
+    ### LoginView.xaml
+    Replace &lt;Border&gt; Content with Windows Hello UI.
+
+    ### LoginView.xaml.cs
+    Uncommment functions.
+
+2. Run the `Microsoft.Knowzy.PackagingProject`
+
+    #### Note: The PackagingProject project should still be set as the StartUp project from the previous phase.
+
+3. Click the `Login` button in the top right
+4. Input the username `sampleUsername` and click Login
+5. Provide your PIN or facial recognition to complete the sign in.
+6. The Login window will dismiss on success and your username will be displayed next to the Logout button.
+
+## Modern command-line
+
+1. Open Store app and show Ubuntu distributions
+
+2. Open your **Developer Command Prompt** to **..\KnowzyInternalApps** and show a few sample WSL commands:
+
+    wsl.exe
+    ls
+    grep "http://"
+    exit
+
+3. Demonstrate the new **tar** and **curl** support like so:
+
+    curl http://aboutknowzy.azurewebsites.net
+
+    tar xf msodbcsql-11.0.2270.0.tar.gz
+
+4. Demonstrate a UWP command line app with arguments:
+
+    KnowzyCmd THANK YOU!
