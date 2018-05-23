@@ -38,7 +38,7 @@ Ensure the "Windows subsystem for Linux" feature has been added in the Windows *
 
 Ensure you have a Linux distribution installed. Go to the **Windows Store app**, search for **"Ubuntu"** and install **"Ubuntu 18.04"**. Once it has installed, run it once to initialize. You can pin the Ubuntu app onto your taskbar for fast access. Leave the Store search page open and handy for later.
 
-In **Visual Studio - Extensions and Updates** search for **"Console App (Universal) Project Templates"** in the **Online** marketplace and install. This will enable you to build and deploy the UWP command line app. **NOTE:** At the time of writing this was only available for C++ apps (hence the C++ pre-requisites), but a C# version is expected imminently.
+In **Visual Studio - Extensions and Updates** search for **"Console App (Universal) Project Templates"** in the **Online** marketplace and install - [also available here](https://marketplace.visualstudio.com/items?itemName=AndrewWhitechapelMSFT.ConsoleAppUniversal). This will enable you to build and deploy the UWP command line app.
 
 In the **Microsoft.Knowzy.WPF** solution, right-click the **KnowzyCmd** project and hit **Deploy**.
 
