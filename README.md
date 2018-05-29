@@ -48,6 +48,10 @@ Open a **Developer Command Prompt** to **..\KnowzyInternalApps** and keep this o
 
 You will need a TPM chip that is pre-configured in order to demonstrate **Windows Hello**. You will need a web-cam if you want to show **Face sign-in**, or a **PIN** configured for PIN sign-in. Ensure you have this setup in **Sign-in options** in **System settings**.
 
+Open **src\Knowzy_Engineering_Win32App\src\Microsoft.Knowzy.AuthenticationService\MicrosoftPassportHelper.cs** and set a breakpoint on the following line 38:
+
+`KeyCredentialRetrievalResult keyCreationResult = await KeyCredentialManager.RequestCreateAsync(accountId, KeyCredentialCreationOption.ReplaceExisting);`
+
 ## Demo Phases:
 
 1. Packaging your desktop app
@@ -105,22 +109,20 @@ You will need a TPM chip that is pre-configured in order to demonstrate **Window
 
 ## Modern features - example: Windows Hello
 
-1. Go to the `Microsoft.Knowzy.WPF` project and update the following files:
+**NOTE:** If you run the Microsoft.Knowzy.WPF project directly -> Login, you will find that you are prompted with the username / password dialog. If you set **Microsoft.Knowzy.PackagingProject** as your startup project however and run through the same flow, you will see that you get the Windows Hello code path. There is a logic check in **LoginView.xaml.cs, line 34** that determines whether you are running in a package or not - you do not need to show this line of code in the demo, but you can explain that you do a check for a package, which enables the concept of a package identity and access to a broader range of Windows 10 APIs. 
 
-    ### LoginView.xaml
-    Replace &lt;Border&gt; Content with Windows Hello UI.
+1. Set `Microsoft.Knowzy.WPF` as the start-up project -> run -> Login. Show the username and password boxes are currently present. Stop the solution
 
-    ### LoginView.xaml.cs
-    Uncommment functions.
+2. Set `Microsoft.Knowzy.PackagingProject` as the start-up project -> run -> Login. Show that you are now only prompted with the username as Windows Hello is going to help so you don't need to remember your full password
 
-2. Run the `Microsoft.Knowzy.PackagingProject`
+3. Input the username `sampleUsername` and click Login
+4. Provide your PIN or facial recognition to complete the sign in
 
-    #### Note: The PackagingProject project should still be set as the StartUp project from the previous phase.
+5. You should hit your breakpoint in (line 38 of **MicrosoftPassportHelper.cs** - see demo setup). Explain that KeyCredentialManager is the Windows 10 API you are using for Windows Hello. Hit F5 to resume.
 
-3. Click the `Login` button in the top right
-4. Input the username `sampleUsername` and click Login
-5. Provide your PIN or facial recognition to complete the sign in.
 6. The Login window will dismiss on success and your username will be displayed next to the Logout button.
+
+7. In Visual Studio, navigate to your **Microsoft.Knowzy.AuthenticationService** project and show references. Call out that we had to add Windows 10 API references to our project to make this possible such as **Windows.Foundation.UniversalApiContract**, which is where **KeyCredentialManager** resides. Explain that people can review our docs to understand which APIs require which references.
 
 ## Modern command-line
 
