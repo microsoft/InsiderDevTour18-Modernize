@@ -89,9 +89,14 @@ Open **src\Knowzy_Engineering_Win32App\src\Microsoft.Knowzy.AuthenticationServic
 9. Check the checkbox: `Enable automatic updates`
 10. Click `Next`
 11. Click `Next` again
-12. Input the network share location to host the files. The field is required even though the generated packages are not actually deposited there, and must be moved manually. Input the share folder path to enable the `Create` button. 
-14. Instead of actually generating more packages, close the window and Alt-Tab over to the folder with the pre-generated app package files.
+12. Input the network share location to host the files. The field is required even though the generated packages are not actually deposited there, and must be moved manually. Input the share folder path to enable the `Create` button.
+
+**Note:** If pushing to a local share, please use your machine name instead of localhost - e.g. \\\MyMachineName\\MyAppUpdateFolder
+
+13. Instead of actually generating more packages, close the window and Alt-Tab over to the folder with the pre-generated app package files.
 14. Double-click the index.html to open (don't need to actually install).
+
+**Note:** If you do intend to show the full end-to-end of an app update automatically getting installed when you next open the app after an update, please ensure there is at least a minor version number difference - i.e. moving from 1.0.0.0 to 1.1.0.0, rather than moving from 1.0.0.0 to 1.0.1.0. 
 
 ## Modern UX - example: WebView
 
