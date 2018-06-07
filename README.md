@@ -133,18 +133,18 @@ Open **src\Knowzy_Engineering_Win32App\src\Microsoft.Knowzy.AuthenticationServic
 
 1. Open Store app and show Ubuntu distributions
 
-2. Open your **Developer Command Prompt** to **..\KnowzyInternalApps** and show a few sample WSL commands:
+2. Open your **Developer Command Prompt** to the root folder of your source code (this will contain files such as **README.md** and **cmddemo.tar.gz**) and show a few sample WSL commands:
 
     wsl.exe
     ls
-    grep "http://"
+    grep "http://" README.md
     exit
 
 3. Demonstrate the new **tar** and **curl** support like so:
 
     curl http://aboutknowzy.azurewebsites.net
 
-    tar xf msodbcsql-11.0.2270.0.tar.gz
+    tar xf cmddemo.tar.gz
 
 4. Demonstrate a UWP command line app with arguments:
 
