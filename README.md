@@ -19,6 +19,9 @@
         * Include .NET Framework 4.6.2 development tools 
     * Desktop development with C++
     * .NET Core cross-platform development
+    
+* SQL Server (Express 2017, installed locally, recommended) 
+
 
 ### Packaging your desktop app - Setup
 
