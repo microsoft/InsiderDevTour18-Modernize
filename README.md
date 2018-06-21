@@ -11,7 +11,7 @@
 * Windows 10 April 2018 Update [10.0.17134]
     * Include Windows subsystem for Linux
 
-* Visual Studio Community 2017 [15.7.1]
+* Visual Studio Community 2017 [15.7.1] (or newer)
     * Universal Windows Platform development 
         * Include Windows 10 SDK 10.0.17134
         * C++ Universal Windows Platform tools
@@ -19,6 +19,11 @@
         * Include .NET Framework 4.6.2 development tools 
     * Desktop development with C++
     * .NET Core cross-platform development
+    * Microsoft Visual C++ 2017 Redistributable [14.11.25325] (for SQL Server Express 2017) 
+    * "Console App (Universal) Project Templates" (from Extensions and Updates, within Visual Studio 2017)    
+* SQL Server (Express 2017, installed locally, recommended) 
+* Ubuntu [18.04] ('app' from the Microsoft Store)
+
 
 ### Packaging your desktop app - Setup
 
@@ -72,7 +77,7 @@ Open **src\Knowzy_Engineering_Win32App\src\Microsoft.Knowzy.AuthenticationServic
     * Name: `Microsoft.Knowzy.PackagingProject`
     * Location: `<path>\KnowzyInternalApps\src\Knowzy_Engineering_Win32App\src\`
 
-    #### Note: This project appears only in Visual Studio 2017 version 15.5 or higher.
+    #### Note: This project appears only in Visual Studio 2017 version 15.5 or higher.  Don't confuse this with the sln of the same name in Knowzy_Engineering_Win32App
 
 3. Set the Target and Min Version of this project to the latest version (2018 April Update). Typically, we would set the **Minimum Version** to `Windows 10 Anniversary Update`. However, for this demo, we want to show the side-by-side app installer updates which only works on the latest version currently.
 
